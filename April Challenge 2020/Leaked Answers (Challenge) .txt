@@ -1,0 +1,46 @@
+
+Time Complexity:- O(NK)
+
+/* package codechef; // don't place package name! */
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+/* Name of the class has to be "Main" only if the class is public. */
+class Codechef
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		Scanner sc = new Scanner(System.in);
+		int testCases = sc.nextInt();
+		while(testCases-- != 0) {
+		    int N = sc.nextInt();
+		    int M = sc.nextInt();
+		    int K = sc.nextInt();
+		    
+		    int[][] arr = new int[N][K];
+		    int[] ans = new int[N];
+		    for(int i = 0; i < N; i++) {
+		        int[] map = new int[M + 1];
+		        for(int j = 0; j < K; j++) {
+		            arr[i][j] = sc.nextInt();
+		            ++map[arr[i][j]];
+		        }
+		        
+		        int maximum = 0, index = 0;
+		        for(int k = 1; k < map.length; k++) {
+		            if(map[k] >= maximum) {
+		                maximum = map[k];
+		                index = k;
+		            }
+		        }
+		        
+		        ans[i] = index;
+		    }
+		    
+		    for(int val : ans) System.out.print(val + " ");
+		    System.out.println();
+		}
+	}
+}
