@@ -1,0 +1,33 @@
+
+
+    public static String getSmallestAndLargest(String s, int k) {
+        String smallest = "";
+        String largest = "";
+
+        String str = s.substring(0, k);
+        smallest = str;
+        for(int i = 1; i < s.length() - k + 1; i++) {
+            String str1 = s.substring(i, i + k);
+            int t = str.compareTo(str1);
+            if(t > 0) {
+                smallest = str1;
+                str = str1;
+            }
+        }
+
+        str = s.substring(0, k);
+        largest = str;
+        for(int i = 1; i < s.length() - k + 1; i++) {
+            String str1 = s.substring(i, i + k);
+            int t = str.compareTo(str1);
+            if(t < 0) {
+                //System.out.println(str1);
+                largest = str1;
+                //smallest = str1;
+                str = str1;
+            }
+        }
+        
+        return smallest + "\n" + largest;
+    }
+

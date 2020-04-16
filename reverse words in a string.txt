@@ -1,0 +1,64 @@
+Given an input string, reverse the string word by word.
+
+ 
+
+Example 1:
+
+Input: "the sky is blue"
+Output: "blue is sky the"
+Example 2:
+
+Input: "  hello world!  "
+Output: "world! hello"
+Explanation: Your reversed string should not contain leading or trailing spaces.
+Example 3:
+
+Input: "a good   example"
+Output: "example good a"
+Explanation: You need to reduce multiple spaces between two words to a single space in the reversed string.
+ 
+
+Note:
+
+A word is defined as a sequence of non-space characters.
+Input string may contain leading or trailing spaces. However, your reversed string should not contain leading or trailing spaces.
+You need to reduce multiple spaces between two words to a single space in the reversed string.
+ 
+
+Follow up:
+
+For C programmers, try to solve it in-place in O(1) extra space.
+
+
+Solution:-
+class Solution {
+    public String reverseWords(String s) {
+        s = s.replaceAll("( )+", " ");
+        String[] str = s.split(" ");
+        for(int i = 0, j = str.length - 1; i < str.length / 2; i++, j--) {
+            String temp = str[i];
+            str[i] = str[j];
+            str[j] = temp;
+        }
+        StringBuffer result = new StringBuffer();
+        for(String t : str) {
+            result.append(t).append(" ");
+        }
+        return result.toString().trim();
+    }
+}
+
+
+class Solution {
+    public String reverseWords(String s) {
+        String[] str = s.split(" ");
+        //String result = "";
+        StringBuffer result = new StringBuffer();
+        for(int i = str.length - 1; i >= 0; i--) {
+            if(str[i].isEmpty())
+                continue;
+            result.append(str[i]).append(" ");
+        }
+        return result.toString().trim();
+    }
+}
