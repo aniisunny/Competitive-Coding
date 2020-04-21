@@ -1,0 +1,51 @@
+Return any binary tree that matches the given preorder and postorder traversals.
+
+Values in the traversals pre and post are distinct positive integers.
+
+ 
+
+Example 1:
+
+Input: pre = [1,2,4,5,3,6,7], post = [4,5,2,6,7,3,1]
+Output: [1,2,3,4,5,6,7]
+ 
+
+Note:
+
+1 <= pre.length == post.length <= 30
+pre[] and post[] are both permutations of 1, 2, ..., pre.length.
+It is guaranteed an answer exists. If there exists multiple answers, you can return any of them.
+
+
+Solution:-
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    
+    private TreeNode helper(int[] preorder, int[] postorder, int preStart, int postStart, int length) {
+        
+        if(length == 0) return null;
+        TreeNode root = new TreeNode(preorder[preStart]);
+        if(length == 1) return root;
+        
+        int index = 1;
+        for(; index < length; index++) if(postorder[postStart + index - 1] == preorder[preStart + 1]) break;
+        
+        root.left = helper(preorder, postorder, preStart + 1, postStart, index);
+        root.right = helper(preorder, postorder, preStart + index + 1, postStart + index, length - index - 1);
+        
+        return root;
+    }
+    
+    public TreeNode constructFromPrePost(int[] preorder, int[] postorder) {
+        
+        return helper(preorder, postorder, 0, 0, preorder.length);
+    }
+}
