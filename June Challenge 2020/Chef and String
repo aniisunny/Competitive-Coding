@@ -1,0 +1,44 @@
+/* package codechef; // don't place package name! */
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+/* Name of the class has to be "Main" only if the class is public. */
+class Codechef
+{
+    private static boolean isCouple (char ch1, char ch2) {
+        return ch1 == 'x' && ch2 == 'y' || ch1 == 'y' && ch2 == 'x';
+    }
+    
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		Scanner scan = new Scanner (System.in);
+		
+		int testCases = scan.nextInt ();
+		
+		while (testCases-- != 0) {
+		    String s = scan.next ();
+		    int length = s.length();
+		    int totalCouples = 0;
+		    
+		    for (int i = 0; i < length - 1; i++) {
+		        char ch1 = s.charAt (i);
+		        char ch2 = s.charAt (i + 1);
+		        
+		        if (isCouple (ch1, ch2)) {
+		            ++totalCouples;
+		            i++;
+		        }
+		    }
+		    
+		    System.out.print (totalCouples + "\n");
+		}
+		
+		scan.close();
+	}
+}
+
+Time Complexity: O(N)
+
+Happy Coding :)
