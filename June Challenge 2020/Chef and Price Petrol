@@ -1,0 +1,36 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Codechef
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		Scanner scan = new Scanner (System.in);
+		
+		int testCases = scan.nextInt ();
+		
+		while (testCases-- != 0) {
+		    int N = scan.nextInt ();
+		    int K = scan.nextInt ();
+		    
+		    int chefRevenue = 0;
+		    
+		    while (N-- != 0) {
+		        int input = scan.nextInt ();
+		        
+		        if (input > K) {
+		            chefRevenue += input - K;
+		        }
+		    }
+		    
+		    System.out.print (chefRevenue + "\n");
+		}
+		
+		scan.close ();
+	}
+}
+
+Time Complexity: O(N)
+
+Happy Coding :)
