@@ -1,0 +1,356 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Codechef
+{
+    static private boolean checkEquals (long[] initialTupple, long[] targetTupple) {
+        
+        for (int i = 0; i < 3; i++) 
+            if (initialTupple[i] != targetTupple[i])
+                return false;
+                
+        return true;
+    }
+    
+    static private boolean solveForOne (long[] initialTupple, long[] targetTupple) {
+        
+        HashMap<Long, Integer> map = new HashMap<>();
+        int count = 0;
+        
+        for (int i = 0; i < 3; i++) {
+            if (initialTupple[i] == targetTupple[i]);
+            else if (initialTupple[i] == 0 || targetTupple [i] % initialTupple [i] != 0) {
+                ++count;
+            }
+            else {
+                long value = targetTupple[i] / initialTupple[i];
+                if (map.containsKey (value)) {
+                    int temp = map.get (value);
+                    map.put (value, temp + 1);
+                }
+                else 
+                    map.put(value, 1);
+            }
+        }
+        
+        if (map.size() == 1 && count == 0) 
+            return true;
+            
+        map.clear ();
+        
+        for (int i = 0; i < 3; i++) {
+            if (initialTupple[i] != targetTupple[i]) {
+                long value = targetTupple[i] - initialTupple[i];
+                if (map.containsKey (value)) {
+                    int temp = map.get (value);
+                    map.put (value, temp + 1);
+                }
+                else 
+                    map.put(value, 1);
+            }
+        }
+        
+        return map.size () == 1;
+    }
+    
+    static private boolean checkForTwo (long[] initialTupple, long[] targetTupple) {
+        
+        HashMap<Long, Integer> map = new HashMap<>();
+        int count = 0;
+        
+        for (int i = 0; i < 3; i++) {
+            if (initialTupple[i] == targetTupple[i]);
+            else if (initialTupple[i] == 0 || targetTupple [i] % initialTupple [i] != 0) {
+                ++count;
+            }
+            else {
+                long value = targetTupple[i] / initialTupple[i];
+                if (map.containsKey (value)) {
+                    int temp = map.get (value);
+                    map.put (value, temp + 1);
+                }
+                else 
+                    map.put(value, 1);
+            }
+        }
+        
+        if (map.size() == 2 && count == 0) 
+            return true;
+            
+        else if (map.size() == 1 && count == 1) 
+            return true;
+        
+        map.clear ();
+        
+        for (int i = 0; i < 3; i++) {
+            if (initialTupple[i] != targetTupple[i]) {
+                long value = targetTupple[i] - initialTupple[i];
+                if (map.containsKey (value)) {
+                    int temp = map.get (value);
+                    map.put (value, temp + 1);
+                }
+                else 
+                    map.put(value, 1);
+            }
+        }
+        
+        return map.size () == 2;
+    }
+    
+    static private List<Long> horizontalDiff (long[] initialTupple, long[] targetTupple) {
+        
+        List<Long> list = new LinkedList<>();
+        
+        for (int i = 0; i < 2; i++) {
+			if (initialTupple[i + 1] - initialTupple[i] == 0) {
+				list.add ((long) 0);
+			}
+			
+			else {
+				long val = (targetTupple[i + 1] - targetTupple[i]) / (initialTupple[i + 1] - initialTupple[i]);
+				list.add (val);
+				list.add (-val);
+			}
+		}
+		
+		if(initialTupple[2] - initialTupple[0] == 0) {
+			list.add ((long) 0);
+		}
+		
+		else {
+			long val = (targetTupple[2] - targetTupple[0]) / (initialTupple[2] - initialTupple[0]);
+			list.add (val);
+			list.add (-val);
+		}
+		
+		return list;
+    }
+    
+    static private boolean checkHorizontalDiff (long[] initialTupple, long[] targetTupple) {
+        
+        List<Long> list = horizontalDiff (initialTupple, targetTupple);
+		
+		for (int i = 0; i < list.size() ; i++) {
+			long[] tempTupple = new long[3];
+			long diff = list.get (i);
+			
+			for (int j = 0; j < 3; j++) 
+				tempTupple[j] = initialTupple[j] * diff;
+			
+			if (solveForOne (tempTupple, targetTupple)) 
+				return true;
+			
+			tempTupple[2] = initialTupple[2];
+			if (solveForOne (tempTupple, targetTupple)) 
+				return true;
+			
+			tempTupple[2] *= diff;
+			tempTupple[0] = initialTupple[0];
+			if (solveForOne (tempTupple, targetTupple)) 
+				return true;
+			
+			tempTupple[0] *= diff;
+			tempTupple[1] = initialTupple[1];
+			if (solveForOne (tempTupple, targetTupple)) 
+				return true;
+			
+			tempTupple[2] = initialTupple[2];
+			if (solveForOne (tempTupple, targetTupple)) 
+				return true;
+			
+			tempTupple[0] = initialTupple[0];
+			tempTupple[1] *= initialTupple[1];
+			if (solveForOne (tempTupple, targetTupple)) 
+				return true;
+			
+			tempTupple[1] = initialTupple[1];
+			tempTupple[2] *= initialTupple[2];
+			if (solveForOne (tempTupple, targetTupple)) 
+				return true;
+		}
+		
+		return false;
+    }
+    
+    private static List<Long> add (long[] initialTupple, long[] targetTupple) {
+		
+		List<Long> list = new LinkedList<>();
+			
+		for (int i = 0; i < 3; i++) {
+			long val = targetTupple[i] - initialTupple[i];
+			list.add (val);
+		}
+		
+		return list;
+	}
+	
+	private static boolean checkAdd (long[] initialTupple, long[] targetTupple) {
+		
+		List<Long> list = add (initialTupple, targetTupple);
+		
+		for (int i = 0; i < list.size(); i++) {
+			long[] tempTupple = new long[3];
+			long diff = list.get (i);
+			
+			for (int j = 0; j < 3; j++) {
+				tempTupple[j] = initialTupple[j] + diff;
+			}
+			
+			if (solveForOne (tempTupple, targetTupple)) {
+				return true;
+			}
+			
+			tempTupple[2] = initialTupple[2];
+			if (solveForOne (tempTupple, targetTupple)) {
+				return true;
+			}
+			
+			tempTupple[2] += diff;
+			tempTupple[0] = initialTupple[0];
+			if (solveForOne (tempTupple, targetTupple)) {
+				return true;
+			}
+			
+			tempTupple[0] += diff;
+			tempTupple[1] = initialTupple[1];
+			if (solveForOne (tempTupple, targetTupple)) {
+				return true;
+			}
+			
+			tempTupple[2] = initialTupple[2];
+			if (solveForOne (tempTupple, targetTupple)) {
+				return true;
+			}
+			
+			tempTupple[1] += diff;
+			tempTupple[0] = initialTupple[0];
+			if (solveForOne (tempTupple, targetTupple)) {
+				return true;
+			}
+			
+			tempTupple[2] += diff;
+			tempTupple[1] = initialTupple[1];
+			if (solveForOne (tempTupple, targetTupple)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	private static List<Long> multiply (long[] initialTupple, long[] targetTupple) {
+		
+		List<Long> list = new LinkedList<>();
+		
+		for(int i = 0; i < 3; i++) {
+			if (initialTupple[i] == targetTupple[i] || initialTupple[i] == 0) {
+				continue;
+			}
+			
+			else if (targetTupple[i] == 0 || targetTupple[i] / initialTupple[i] == 0) {
+				list.add ((long) 0);
+			}
+			
+			else {
+				long val = targetTupple[i] / initialTupple[i];
+				list.add (val);
+				list.add (-val);
+			}
+		}
+		
+		return list;
+	}
+	
+	private static boolean checkMultiply (long[] initialTupple, long[] targetTupple) {
+		
+		List<Long> list = multiply(initialTupple, targetTupple);
+		
+		for (int i = 0; i < list.size(); i++) {
+			long[] tempTupple = new long[3];
+			long diff = list.get (i);
+			
+			for(int j = 0; j < 3; j++) {
+				tempTupple[j] = initialTupple[j] * diff;
+			}
+			
+			if (solveForOne (tempTupple, targetTupple)) {
+				return true;
+			}
+			
+			tempTupple[2] = initialTupple[2];
+			if (solveForOne (tempTupple, targetTupple)) {
+				return true;
+			}
+			
+			tempTupple[2] *= diff;
+			tempTupple[0] = initialTupple[0];
+			if (solveForOne (tempTupple, targetTupple)) {
+				return true;
+			}
+			
+			tempTupple[0] *= diff;
+			tempTupple[1] = initialTupple[1];
+			if (solveForOne (tempTupple, targetTupple)) {
+				return true;
+			}
+			
+			tempTupple[2] = initialTupple[2];
+			if (solveForOne (tempTupple, targetTupple)) {
+				return true;
+			}
+			
+			tempTupple[0] = initialTupple[0];
+			tempTupple[1] *= diff;
+			if (solveForOne (tempTupple, targetTupple)) {
+				return true;
+			}
+			
+			tempTupple[1] = initialTupple[1];
+			tempTupple[2] *= initialTupple[2];
+			if (solveForOne (tempTupple, targetTupple)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+    
+    static private boolean solveForTwo (long[] initialTupple, long[] targetTupple) {
+        
+        return checkForTwo (initialTupple, targetTupple) || checkAdd (initialTupple, targetTupple) || checkMultiply (initialTupple, targetTupple) || checkHorizontalDiff (initialTupple, targetTupple);
+    }
+    
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		Scanner scan = new Scanner (System.in);
+		
+		int testCases = scan.nextInt ();
+		
+		while (testCases-- != 0) {
+		    long[] initialTupple = new long[3];
+		    
+		    for (int i = 0; i < 3; i++) 
+		        initialTupple[i] = scan.nextInt ();
+		    
+		    long[] targetTupple = new long[3];
+		    
+		    for (int i = 0; i < 3; i++) 
+		        targetTupple[i] = scan.nextInt ();
+		    
+		    if (checkEquals (initialTupple, targetTupple)) 
+		        System.out.print ("0\n");
+		        
+		    else if (solveForOne (initialTupple, targetTupple)) 
+		        System.out.print ("1\n");
+		        
+		    else if (solveForTwo (initialTupple, targetTupple)) 
+		        System.out.print ("2\n");
+		        
+		    else 
+		        System.out.print ("3\n");
+		}
+	}
+}
+
+Happy Coding :)
