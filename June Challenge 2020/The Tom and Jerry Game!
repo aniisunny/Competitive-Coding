@@ -1,0 +1,42 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Codechef
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		Scanner scan = new Scanner (System.in);
+		
+		int testCases = scan.nextInt ();
+		
+		while (testCases-- != 0) {
+		    long TS = scan.nextLong ();
+		    
+		    if ((TS & 1) != 0) {
+		        System.out.print (TS / 2 + "\n");
+		        continue;
+		    }
+		    
+		    long count = 1;
+		    long tempTS = TS;
+		    
+		    while ((tempTS & 1) == 0) {
+		        ++count;
+		        tempTS >>= 1;
+		    }
+		    
+		    if (tempTS == 0) {
+		        System.out.print (0 + "\n");
+		        continue;
+		    }
+		    
+		    long firstPower = (long) Math.pow (2, count);
+		    System.out.print (TS / firstPower + "\n");
+		}
+	}
+}
+
+Time Complexity: O(log N)
+
+Happy Coding :)
