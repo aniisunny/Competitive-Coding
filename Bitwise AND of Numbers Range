@@ -1,4 +1,4 @@
-Given a range [m, n] where 0 <= m <= n <= 2147483647, return the bitwise AND of all numbers in this range, inclusive.
+Given a range [m, n] where 0 <= m <= n <= 2147483647, return the bitwise AND of all the numbers in this range, inclusive.
 
 Example 1:
 
@@ -10,7 +10,7 @@ Input: [0,1]
 Output: 0
 
 
-Solution:-
+SOLUTION:-
 class Solution {
     public int rangeBitwiseAnd(int m, int n) {
         
