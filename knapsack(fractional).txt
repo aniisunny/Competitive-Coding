@@ -1,0 +1,43 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+
+int main()
+{
+    ll n,m;
+    cin>>n>>m;
+    ll w[n],p[n];
+    for(ll i=0;i<n;i++)
+    {
+        cin>>w[i];
+    }
+    for(ll i=0;i<n;i++)
+    {
+        cin>>p[i];
+    }
+    multimap<double,ll, greater<>> ma;
+    for(ll i=0;i<n;i++)
+    {
+       ma.insert(make_pair(double(double(p[i])/double(w[i])), i));
+    }
+    for(auto itr=ma.begin();itr!=ma.end();itr++)
+    {
+        //cout<<itr->first<<" "<<itr->second<<endl;
+    }
+    double f[100]={0};
+    for(auto itr=ma.begin();itr!=ma.end();itr++)
+    {
+        ll mini=min(m,w[itr->second]);
+        m=m-mini;
+        f[itr->second]=double(mini)/double(w[itr->second]);
+        if(m==0)
+        break;
+    }
+    double ans=0;
+    for(ll i=0;i<n;i++)
+    {
+        //cout<<f[i]<<endl;
+        ans+=p[i]*f[i];
+    }
+    cout<<ans<<endl;
+}
