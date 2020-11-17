@@ -1,0 +1,31 @@
+#include<bits/stdc++.h>
+using namespace std;
+string s,s2;
+int dp[5002][5002];
+int rec(int nn,int m)
+{
+	if(nn==0 || m==0)
+		return 0;
+	if(dp[nn][m]!=-1)
+		return dp[nn][m];
+	if(s[nn-1]==s2[m-1])
+		 dp[nn][m]=1+rec(nn-1,m-1);
+	else
+	dp[nn][m]=max(rec(nn-1,m),rec(nn,m-1));
+	return dp[nn][m];
+}
+int main()
+{
+	int n;
+	cin>>n;
+	
+	cin>>s;
+	memset(dp,-1,sizeof(dp));
+	
+   s2=s;
+   reverse(s2.begin(),s2.end());
+   
+    int l=rec(n,n);
+   
+    cout<<s.length()-l;
+}
